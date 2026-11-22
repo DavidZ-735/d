@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html data-page-node-id="WpnSSY3Fs6rfDw7fAzlJZV" lang="zh-CN"><head data-page-node-id="0MTDarZHWwx0i92syNgmv1">
+<meta data-page-node-id="ITJxYy6EDiwr2svQb83Oqz" charset="UTF-8">
+<meta data-page-node-id="7S1zOrzC3LUlDVk3PynZx8" name="viewport" content="width=device-width, initial-scale=1.0">
+<meta data-page-node-id="ZTnDzENnfS7qhB0zXyaXKQ" name="description" content="成都大学工商管理专业学生个人主页，课程作业作品与虎扑小游戏">
+<title data-page-node-id="jBTGM7M6amop4fKbd3rLsr" data-pnid-children="w4ucrJai1lUJ0sY2HrGsmm">XXX的个人主页 · 工商管理</title>
+
+<!--
+  ==========================================================================
+  成都大学 · 工商管理 · 课程作业个人主页
+  --------------------------------------------------------------------------
+  【使用说明】
+  1. 纯 HTML + CSS 单文件，无任何外部依赖（图标全部内联 SVG，图片全部为
+     纯 CSS 占位块），可直接上传到「刘老和同学们」平台或任意静态空间；
+  2. 修改内容：用编辑器全局搜索「★」符号，即可逐条定位到需要替换的
+     姓名、专业、文案、图片与链接；
+  3. 替换游戏封面图：把带 class="game-cover" 的 <a> 整段换成
+     <img class="game-cover" src="游戏截图.png" alt="游戏画面"
+          style="object-fit:cover">
+     即可保持同样的圆角与比例（CSS 中已用 border-radius + aspect-ratio 处理）；
+  4. 换配色：只改 :root 里的 --blue / --blue-deep / --tint 三个变量，
+     全站颜色会同步变化；
+  5. 顶部导航的「滚动加深」效果使用 CSS 滚动驱动动画实现，Chrome / Edge
+     等新版浏览器自动生效，旧浏览器降级为固定半透明背景，不影响使用。
+  ==========================================================================
+-->
+
+<style data-page-node-id="7vysA2OIav1I18w7gp90z9" data-pnid-children="HQwA7AQuLMsCbjafFpD1SG">
+/* ============================================================
+   0. 设计变量（换主色只改这里）
+   ============================================================ */
+:root{
+  --blue:#2B4A80;          /* 低饱和克莱因蓝，主色 */
+  --blue-deep:#1E365F;     /* 主色加深，用于 hover */
+  --blue-ink:#16233D;      /* 标题深墨蓝 */
+  --tint:#F1F5FB;          /* 浅蓝底 */
+  --tint-2:#E7EFFA;        /* 浅蓝底（深一档） */
+  --line:#E6EAF2;          /* 细分割线 */
+  --line-2:#D9E1EE;
+  --bg:#FCFCFD;            /* 页面底色 */
+  --text:#414B5C;          /* 正文 */
+  --muted:#8A94A4;         /* 次要文字 */
+  --white:#fff;
+
+  --nav-h:68px;            /* 导航高度（手机端在媒体查询里改为 80px） */
+  --maxw:1120px;           /* 内容最大宽度 */
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+/* ============================================================
+   1. 基础重置
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{
+  scroll-behavior:smooth;
+  /* 锚点跳转时为固定导航留出高度 */
+  scroll-padding-top:calc(var(--nav-h) + 28px);
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+h1,h2,h3,h4,p,dl,dd{margin:0;}
+ul{margin:0;padding:0;list-style:none;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+svg{display:block;}
+i,em{font-style:normal;}
+
+::selection{ background:#D8E3F5; color:var(--blue-ink); }
+
+a:focus-visible{
+  outline:2px solid var(--blue);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+.wrap{
+  width:100%;
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 32px;
+}
+
+/* ============================================================
+   2. 顶部固定导航
+   ============================================================ */
+.nav{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  background-color:rgba(255,255,255,.66);
+  -webkit-backdrop-filter:blur(14px) saturate(1.5);
+  backdrop-filter:blur(14px) saturate(1.5);
+  border-bottom:1px solid transparent;
+}
+
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  height:var(--nav-h);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+  font-weight:650;
+  letter-spacing:.01em;
+  color:var(--blue-ink);
+  flex:0 0 auto;
+}
+
+.brand-mark{
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  font-size:13px;
+  font-weight:700;
+  color:#fff;
+  background:var(--blue);
+  box-shadow:0 8px 16px -10px rgba(43,74,128,.95);
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:2px;
+}
+
+.nav-links a{
+  position:relative;
+  padding:10px 14px;
+  font-size:14px;
+  color:#5B6577;
+  transition:color .25s var(--ease);
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:14px; right:14px; bottom:6px;
+  height:1px;
+  background:var(--blue);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .35s var(--ease);
+}
+
+.nav-links a:hover{ color:var(--blue); }
+.nav-links a:hover::after{ transform:scaleX(1); }
+
+/* 滚动时导航背景轻微加深（滚动驱动动画，不支持的浏览器自动忽略） */
+@supports (animation-timeline: scroll()){
+  .nav{
+    animation:nav-solid linear both;
+    animation-timeline:scroll(root block);
+    animation-range:0 160px;
+  }
+  @keyframes nav-solid{
+    from{
+      background-color:rgba(255,255,255,.62);
+      border-bottom-color:rgba(230,234,242,0);
+      box-shadow:0 0 0 0 rgba(22,35,61,0);
+    }
+    to{
+      background-color:rgba(255,255,255,.94);
+      border-bottom-color:var(--line);
+      box-shadow:0 12px 30px -24px rgba(22,35,61,.55);
+    }
+  }
+}
+
+/* ============================================================
+   3. 首屏欢迎区
+   ============================================================ */
+.hero{
+  padding:calc(var(--nav-h) + 92px) 0 72px;
+}
+
+.hero-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--line);
+  font-size:11.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.hero-name{
+  margin-top:40px;
+  font-size:clamp(3.1rem,8.4vw,5.6rem);
+  line-height:1.04;
+  font-weight:700;
+  letter-spacing:-.02em;
+  color:var(--blue-ink);
+}
+
+.hero-dot{ color:var(--blue); }
+
+.hero-tags{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-top:26px;
+  font-size:15px;
+  color:#57627A;
+}
+
+.hero-tags .sep{
+  width:1px;
+  height:14px;
+  background:var(--line-2);
+}
+
+.hero-foot{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:48px;
+  margin-top:46px;
+}
+
+.hero-slogan{
+  font-size:clamp(1.05rem,1.8vw,1.3rem);
+  line-height:1.8;
+  color:#46505F;
+  letter-spacing:.01em;
+}
+
+.hero-meta{
+  display:flex;
+  gap:40px;
+  flex:0 0 auto;
+}
+
+.hero-meta dt{
+  font-size:11px;
+  letter-spacing:.14em;
+  color:#9AA4B4;
+}
+
+.hero-meta dd{
+  margin-top:6px;
+  font-size:14.5px;
+  font-weight:600;
+  color:var(--blue-ink);
+}
+
+/* ============================================================
+   4. 各板块通用结构
+   ============================================================ */
+.sec{ padding-top:78px; }
+
+.sec-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  padding-top:26px;
+  border-top:1px solid var(--line);
+}
+
+.eyebrow{
+  display:block;
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#7C93B8;
+}
+
+.sec-title{
+  margin-top:12px;
+  font-size:clamp(1.55rem,2.9vw,2.1rem);
+  line-height:1.35;
+  font-weight:650;
+  letter-spacing:-.01em;
+  color:var(--blue-ink);
+  text-wrap:balance;
+}
+
+.sec-note{
+  padding-bottom:6px;
+  font-size:12.5px;
+  color:#9AA4B4;
+  text-align:right;
+}
+
+.sec-body{ margin-top:42px; }
+
+/* ============================================================
+   5. 关于我（左右双栏，中间细线）
+   ============================================================ */
+.about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+.about-col{ padding:0 48px; }
+
+.about-col:first-child{
+  padding-left:0;
+  border-right:1px solid var(--line);
+}
+
+.about-col:last-child{ padding-right:0; }
+
+.about-col h3{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#7C93B8;
+}
+
+.about-col p{
+  font-size:15.5px;
+  line-height:1.95;
+  color:#46505F;
+}
+
+.about-col p + p{ margin-top:14px; }
+
+.about-sign{
+  margin-top:22px;
+  font-size:12.5px;
+  color:#9AA4B4;
+  text-align:right;
+}
+
+/* 能力清单 */
+.skill-list{
+  margin-top:26px;
+  border-top:1px solid var(--line);
+}
+
+.skill-list li{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:16px;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+  color:#46505F;
+}
+
+.skill-list em{
+  flex:0 0 auto;
+  font-size:12.5px;
+  color:#93A0B4;
+}
+
+/* ============================================================
+   6. 作品：虎扑小游戏（浅蓝底大卡片）
+   ============================================================ */
+/* 作品列表容器：重点卡片横跨整行，其余作品排成三列 */
+.works-list{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.works-list .game-card{
+  grid-column:1 / -1;
+}
+
+/* 普通作品卡（当前未启用，新增作品时复制 HTML 中的模板块即可） */
+.work-item{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:20px;
+  transition:transform .45s var(--ease), box-shadow .45s var(--ease), border-color .45s var(--ease);
+}
+
+.work-item:hover{
+  transform:translateY(-5px);
+  border-color:#D9E2F0;
+  box-shadow:0 26px 50px -28px rgba(22,35,61,.42);
+}
+
+.work-item-cover{
+  display:grid;
+  place-items:center;
+  aspect-ratio:4 / 3;
+  object-fit:cover;
+  border-bottom:1px solid var(--line);
+  background-color:#F6F9FD;
+  background-image:
+    linear-gradient(rgba(43,74,128,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43,74,128,.045) 1px, transparent 1px);
+  background-size:26px 26px, 26px 26px;
+  font-size:12px;
+  letter-spacing:.14em;
+  color:#8FA3C0;
+}
+
+.work-item-body{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  gap:10px;
+  padding:20px;
+}
+
+.work-item-body h3{
+  font-size:16px;
+  font-weight:650;
+  line-height:1.55;
+  color:var(--blue-ink);
+}
+
+.work-item-body p{
+  flex:1;
+  font-size:13.5px;
+  line-height:1.8;
+  color:#6D7889;
+}
+
+.work-item-link{
+  align-self:flex-start;
+  font-size:13px;
+  font-weight:600;
+  color:var(--blue);
+}
+
+.work-item-link:hover{ text-decoration:underline; }
+
+.game-card{
+  display:grid;
+  grid-template-columns:1.06fr .94fr;
+  gap:44px;
+  align-items:center;
+  padding:48px;
+  border:1px solid #E0E8F5;
+  border-radius:28px;
+  background:linear-gradient(165deg,#F5F8FD 0%,#EAF1FA 100%);
+}
+
+.game-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 12px;
+  border:1px solid #DDE7F5;
+  border-radius:999px;
+  background:#fff;
+  font-size:11.5px;
+  letter-spacing:.08em;
+  color:#5A76A2;
+}
+
+.game-badge i{
+  width:6px;
+  height:6px;
+  flex:0 0 6px;
+  border-radius:50%;
+  background:#4C7BC4;
+}
+
+.game-title{
+  margin-top:18px;
+  font-size:clamp(1.5rem,2.6vw,1.95rem);
+  font-weight:700;
+  line-height:1.35;
+  letter-spacing:-.01em;
+  color:var(--blue-ink);
+  text-wrap:balance;
+}
+
+.game-lede{
+  margin-top:14px;
+  max-width:38em;
+  font-size:15px;
+  line-height:1.9;
+  color:#4B5768;
+}
+
+.game-notes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:26px;
+  margin:26px 0 30px;
+}
+
+.game-notes h4{
+  margin-bottom:8px;
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:.14em;
+  color:#728CB4;
+}
+
+.game-notes p{
+  font-size:13.2px;
+  line-height:1.85;
+  color:#5A6577;
+}
+
+.game-actions{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+}
+
+.game-hint{
+  font-size:12px;
+  color:#8C9AB0;
+}
+
+/* 主按钮 */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:15px 30px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:.01em;
+  transition:transform .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+.btn-primary{
+  color:#fff;
+  background:var(--blue);
+  box-shadow:0 16px 32px -16px rgba(43,74,128,.85);
+}
+
+.btn-primary:hover{
+  background:var(--blue-deep);
+  transform:translateY(-2px);
+  box-shadow:0 22px 38px -16px rgba(43,74,128,.9);
+}
+
+.btn-primary svg{ transition:transform .3s var(--ease); }
+.btn-primary:hover svg{ transform:translateX(4px); }
+
+/* 游戏封面占位 */
+.game-cover{
+  position:relative;
+  display:grid;
+  place-items:center;
+  aspect-ratio:4 / 3;
+  overflow:hidden;
+  border:1px solid #D3DFF0;
+  border-radius:20px;
+  background-color:#DEE9F8;
+  background-image:
+    radial-gradient(rgba(43,74,128,.10) 1px, transparent 1px),
+    linear-gradient(150deg,#E8F0FB,#CFDDF2);
+  background-size:18px 18px, 100% 100%;
+  box-shadow:0 30px 60px -40px rgba(22,35,61,.55), inset 0 1px 0 rgba(255,255,255,.6);
+  transition:transform .45s var(--ease), box-shadow .45s var(--ease);
+  object-fit:cover;
+}
+
+.game-cover:hover{
+  transform:translateY(-3px);
+  box-shadow:0 36px 66px -40px rgba(22,35,61,.62), inset 0 1px 0 rgba(255,255,255,.6);
+}
+
+/* 模拟浏览器窗口的三个小圆点，暗示这是网页游戏 */
+.game-chrome{
+  position:absolute;
+  top:14px; left:16px;
+  display:flex;
+  gap:5px;
+}
+
+.game-chrome i{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(43,74,128,.22);
+}
+
+.play{
+  display:grid;
+  place-items:center;
+  width:66px;
+  height:66px;
+  border-radius:50%;
+  color:#fff;
+  background:var(--blue);
+  box-shadow:0 18px 34px -16px rgba(43,74,128,.95);
+  transition:transform .35s var(--ease), background-color .3s var(--ease);
+}
+
+.play svg{
+  width:22px;
+  height:22px;
+  margin-left:3px;
+  fill:currentColor;
+}
+
+.game-cover:hover .play{
+  transform:scale(1.06);
+  background:var(--blue-deep);
+}
+
+.game-cover-note{
+  position:absolute;
+  bottom:16px;
+  font-size:11px;
+  letter-spacing:.14em;
+  color:#7C93B4;
+}
+
+/* ============================================================
+   7. 生活兴趣
+   ============================================================ */
+.life{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.life-card{
+  display:flex;
+  gap:16px;
+  padding:22px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:18px;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+}
+
+.life-card:hover{
+  transform:translateY(-4px);
+  border-color:#DCE4F2;
+  box-shadow:0 18px 36px -26px rgba(22,35,61,.4);
+}
+
+.life-icon{
+  display:grid;
+  place-items:center;
+  flex:0 0 44px;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:#F1F6FC;
+  color:#4C6EA3;
+}
+
+.life-icon svg{
+  width:22px;
+  height:22px;
+}
+
+.life-card h3{
+  font-size:14.5px;
+  font-weight:650;
+  color:var(--blue-ink);
+}
+
+.life-card p{
+  margin-top:6px;
+  font-size:12.8px;
+  line-height:1.75;
+  color:#8A94A4;
+}
+
+/* ============================================================
+   8. 联系
+   ============================================================ */
+.contact{
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  gap:56px;
+  align-items:start;
+}
+
+.contact-copy p{
+  font-size:15.5px;
+  line-height:1.95;
+  color:#46505F;
+}
+
+.contact-copy .hint{
+  margin-top:16px;
+  font-size:12.5px;
+  color:#9AA4B4;
+}
+
+.contact-list{
+  border-top:1px solid var(--line);
+}
+
+.contact-list .row{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:22px 2px;
+  border-bottom:1px solid var(--line);
+}
+
+.contact-list .label{
+  flex:0 0 62px;
+  font-size:12px;
+  letter-spacing:.1em;
+  color:#93A0B4;
+}
+
+.contact-list .value{
+  flex:1;
+  font-size:17px;
+  font-weight:600;
+  color:var(--blue-ink);
+  letter-spacing:.01em;
+  word-break:break-all;
+  transition:transform .3s var(--ease), color .3s var(--ease);
+}
+
+.contact-list svg{
+  flex:0 0 auto;
+  color:#AEBACB;
+  transition:transform .3s var(--ease), color .3s var(--ease);
+}
+
+.contact-list a.row:hover .value{
+  color:var(--blue);
+  transform:translateX(4px);
+}
+
+.contact-list a.row:hover svg{
+  color:var(--blue);
+  transform:translate(2px,-2px);
+}
+
+/* ============================================================
+   9. 页脚
+   ============================================================ */
+.footer{
+  margin-top:88px;
+  padding:30px 0 42px;
+  border-top:1px solid var(--line);
+}
+
+.footer-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px 24px;
+  font-size:12.5px;
+  color:#9AA4B4;
+}
+
+.footer-inner .quote{ color:#5C6879; }
+
+.footer-inner a{
+  font-weight:600;
+  color:var(--blue);
+}
+
+.footer-inner a:hover{ text-decoration:underline; }
+
+/* ============================================================
+   10. 入场微动效
+   ============================================================ */
+@keyframes rise{
+  from{ opacity:0; transform:translateY(16px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.hero-top{ animation:rise .7s var(--ease) both; }
+.hero-name{ animation:rise .8s var(--ease) .06s both; }
+.hero-tags{ animation:rise .8s var(--ease) .14s both; }
+.hero-foot{ animation:rise .8s var(--ease) .22s both; }
+
+/* ============================================================
+   11. 响应式
+   ============================================================ */
+@media (max-width:980px){
+  .about-col{ padding:0 32px; }
+
+  .works-list{ grid-template-columns:repeat(2,1fr); }
+
+  .game-card{
+    grid-template-columns:1fr;
+    gap:34px;
+    padding:36px;
+  }
+  .game-cover{ aspect-ratio:16 / 10; }
+}
+
+@media (max-width:760px){
+  :root{ --nav-h:80px; }
+
+  .wrap{ padding:0 20px; }
+
+  /* 导航改为两行：品牌 + 一行文字锚点，避免横向挤压 */
+  .nav-inner{
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:9px;
+    height:auto;
+    padding-top:12px;
+    padding-bottom:12px;
+  }
+
+  .nav-links{
+    width:100%;
+    gap:22px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .nav-links::-webkit-scrollbar{ display:none; }
+
+  .nav-links a{
+    padding:0;
+    font-size:13px;
+    white-space:nowrap;
+  }
+  .nav-links a::after{
+    left:0; right:0; bottom:-3px;
+  }
+
+  .hero{ padding:calc(var(--nav-h) + 46px) 0 44px; }
+
+  .hero-top{ font-size:10.5px; letter-spacing:.12em; }
+  .hero-name{ margin-top:28px; }
+  .hero-tags{ flex-wrap:wrap; gap:10px; margin-top:20px; font-size:14px; }
+
+  .hero-foot{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:26px;
+    margin-top:32px;
+  }
+  .hero-meta{ gap:28px; }
+
+  .sec{ padding-top:58px; }
+
+  .sec-head{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px;
+    padding-top:20px;
+  }
+  .sec-note{ padding-bottom:0; text-align:left; }
+  .sec-body{ margin-top:30px; }
+
+  .about{ grid-template-columns:1fr; }
+  .about-col{ padding:0; }
+  .about-col:first-child{
+    padding-bottom:30px;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+  .about-col:last-child{ padding-top:30px; }
+
+  .works-list{ grid-template-columns:1fr; gap:18px; }
+
+  .contact{
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .contact-list .label{ flex-basis:48px; }
+
+  .game-card{
+    padding:26px 22px;
+    border-radius:22px;
+    gap:28px;
+  }
+  .game-notes{ grid-template-columns:1fr; gap:20px; margin:22px 0 26px; }
+  .game-actions{ gap:12px; }
+  .btn{ width:100%; }
+  .game-hint{ width:100%; text-align:center; }
+
+  .life{ grid-template-columns:1fr; gap:14px; }
+
+  .footer{ margin-top:60px; padding:24px 0 34px; }
+  .footer-inner{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+}
+
+/* 尊重系统「减少动画」设置 */
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+</style>
+</head>
+
+<body data-page-node-id="qXiJExpM5JO6MGPoNw3YUt" id="top">
+
+<!-- ============================================================
+     顶部固定导航
+     ★ 修改处：左上角站点名「XXX的个人主页」、图标里的「X」首字母
+     ============================================================ -->
+<header data-page-node-id="hY4mlryI04TzlOAvgyvGAy" class="nav">
+  <div data-page-node-id="V4e3vuXE6JQr5qJyxbGAUh" class="wrap nav-inner">
+    <a data-page-node-id="PHLXk9HtdSP0RAj5KCTk1Y" class="brand" href="#top">
+      <span data-page-node-id="ehtYEeeygY8GO2pdXPUlyG" class="brand-mark" aria-hidden="true">X</span>
+      <span data-page-node-id="t2MBTwKTGqevC5Qwxr0AbA">张炜的个人主页</span>
+    </a>
+
+    <nav data-page-node-id="GYmVUb2vu3ezK4WB3DdtIB" class="nav-links" aria-label="页面导航">
+      <a data-page-node-id="JFsnfDDWjXQigGpK8BnEqz" href="#about">关于</a>
+      <a data-page-node-id="MhrcsP8ZtPSWpwmj04HI3N" href="#works">作品</a>
+      <a data-page-node-id="T8Sj1OU0TtiKkHbPf99w1D" href="#life">兴趣</a>
+      <a data-page-node-id="z4ydOqL57YUDtcWS9F6Dfr" href="#contact">联系</a>
+    </nav>
+  </div>
+</header>
+
+<main data-page-node-id="qwAFzdsIBk3t2QrQbT0nWj">
+
+  <!-- ============================================================
+       首屏欢迎区
+       ★ 修改处：顶部信息条、姓名、标签、slogan、右侧三项信息
+       ============================================================ -->
+  <section data-page-node-id="GC2hGpv9qsYAixJWs46qp1" class="hero">
+    <div data-page-node-id="OAjOfYrmtvGspzS4mdKboP" class="wrap">
+
+      <div data-page-node-id="YFG2Anln3JFdyqOLMFkRYM" class="hero-top">
+        <span data-page-node-id="EqQRH0r2vC5P5JNove7eit">成都大学 · 工商管理</span>
+        <span data-page-node-id="lOXMsHLK4Xf8ELyZmaBZ5k">课程作业主页 / 2026</span>
+      </div>
+
+      <!-- ★ 姓名：默认 XXX，直接替换成你的名字即可 -->
+      <h1 data-page-node-id="71ODrJYbBaX5mpeUHYPGAB" class="hero-name">张炜.<span data-page-node-id="d5BeZec2tdWzCkgHuV1ZMh" class="hero-dot">.</span></h1>
+
+      <!-- ★ 身份标签 -->
+      <div data-page-node-id="jw86YVDGK3pS4X2HUGBcZ9" class="hero-tags">
+        <span data-page-node-id="YlbzU7FBleHu56Gs29XUtL">工商管理专业</span>
+        <i data-page-node-id="6Ds6hFLwqQRfFsbmZZGOyF" class="sep" aria-hidden="true"></i>
+        <span data-page-node-id="ADAfZBT9CqLhWIIOLi9tN9">课程作业主页</span>
+      </div>
+
+      <div data-page-node-id="21BgSz9IN5CfDKnhF6vuzX" class="hero-foot">
+        <!-- ★ 个人 slogan，一句即可 -->
+        <p data-page-node-id="blMHWfPvjSFaHD2S5YMhLa" class="hero-slogan">
+          把复杂的事拆开看，<br data-page-node-id="JVZNmjx1aOSJPP8Baq4ACx">把喜欢的事做出来。
+        </p>
+
+        <!-- ★ 右侧信息：学校 / 学院 / 年级，不需要的整组 <div> 删掉 -->
+        <dl data-page-node-id="JbpK7Uxn5typ1PzvKGK27V" class="hero-meta">
+          <div data-page-node-id="Bf4x4Ps6AWUP8p748mlJFm">
+            <dt data-page-node-id="e5oCAOjXhqO8xofLf0nsq6">学校</dt>
+            <dd data-page-node-id="t7t17wfVh9Bbrr3onE35nq">成都大学</dd>
+          </div>
+          <div data-page-node-id="dGLc8Axds2UilFXjllydHh">
+            <dt data-page-node-id="aT8bxEWXy9ffAF3NdMIf70">学院</dt>
+            <dd data-page-node-id="oFJExuI2YGH68x5r7L9HxJ">商学院</dd>
+          </div>
+          <div data-page-node-id="232o1jIES0YFjTuIutjL8v"><dt data-page-node-id="YJm60MlfAn67hdzRSpTjcQ">年级</dt><dd data-page-node-id="Vf2mFhgYF0qQT2DSA8EzLp">2024 级</dd></div>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       关于我
+       ★ 修改处：学业侧文案、能力清单、个人侧文案
+       ============================================================ -->
+  <section data-page-node-id="DmexUN44rik57uU4THDMVg" class="sec" id="about">
+    <div data-page-node-id="yBw0DeGexVcqTJA48S7Tb3" class="wrap">
+
+      <div data-page-node-id="QuDsDKy1lIUsPObEmnFNBX" class="sec-head">
+        <div data-page-node-id="JTkxEkJ5S5zNQm4eq8E0FN">
+          <span data-page-node-id="6Mg5SF7fAMSU5nRqCvV9uO" class="eyebrow">01 / 关于</span>
+          <h2 data-page-node-id="g68N7b2PvhK5831iJAe0IH" class="sec-title">学业，与课堂之外的我</h2>
+        </div>
+        <p data-page-node-id="EePacWWeI77JyqUyMxexHN" class="sec-note">课程方向 / 技能清单</p>
+      </div>
+
+      <div data-page-node-id="HwLu28hfHVqKwSp4g8Bqpt" class="sec-body about">
+
+        <!-- 左侧：学业 -->
+        <div data-page-node-id="KAt3FoASoBqlUuojWOULb4" class="about-col">
+          <h3 data-page-node-id="Ew8KlvfLyobmgskbudheWa">A — 学业侧</h3>
+          <p data-page-node-id="AVdwRLENL0oTFMJo1tEZJj">
+            在成都大学读工商管理，学的主要是把真实的商业问题，拆成看得懂的数据和说得清的方案。
+            市场营销、消费者行为、运营管理这几门课下功夫最多，习惯先把资料和问卷做扎实，再下结论。
+          </p>
+          <p data-page-node-id="x5DAvEs1qPA4DcD7wMThDC">
+            比起背概念，更喜欢做完整的作业流程：定问题、找数据、算模型、最后写成一份别人能看懂的文档。
+          </p>
+
+          <!-- ★ 能力清单：可增删条目，右侧「熟练 / 了解」也可改 -->
+          <ul data-page-node-id="jEwVDsJczXVYCYvW2I9OYX" class="skill-list">
+            <li data-page-node-id="dndxtmFsjqOP8fFGRKMEzX"><span data-page-node-id="1bhUDkYojwEoGSk6BLXSIj">市场调研与问卷设计</span><em data-page-node-id="jhMhcKExinHkrIOkYXwvr7">熟练</em></li>
+            <li data-page-node-id="FGctKCPvnCDFwNOjEvrd6o"><span data-page-node-id="K8Iy0FiHOXac9TRdHkNQm8">Excel 数据透视与图表</span><em data-page-node-id="8bm2sZ2ZkYLw8aMEflultb">熟练</em></li>
+            <li data-page-node-id="bmqc2CD0EqTsHHhRNqaQoB"><span data-page-node-id="tCUOj36jgDRBdibVBGbApL">SPSS 基础统计分析</span><em data-page-node-id="2tTddq69zgGUSt0u3GB0Oe">了解</em></li>
+            <li data-page-node-id="s7DQWtE8kMqgrjiKbYlUoW"><span data-page-node-id="BEYPhCaYFa2H71kmPpqrUI">商业计划书 / 调研报告撰写</span><em data-page-node-id="SaAZ0MlFctmd52wu6s4m7B">熟练</em></li>
+          </ul>
+        </div>
+
+        <!-- 右侧：个人 -->
+        <div data-page-node-id="tpr6LcADLQfNCMKGngQrCN" class="about-col">
+          <h3 data-page-node-id="CXOMoTnZr6zKOpZPBRGJNL">B — 个人侧</h3>
+          <p data-page-node-id="GOvRTErI0I6uLLu1SDyNRX">
+            课外的我，有一半时间在折腾小游戏。看到一个有意思的玩法就忍不住拆开看，
+            然后想办法用网页复刻一个——哪怕最后只有我和室友在玩，也觉得挺值。
+          </p>
+          <p data-page-node-id="Jvq34gbbvSfyouaFHPmw6E">
+            也看球，喜欢琢磨战术和球员数据，经常把比赛里的数字整理成表格；
+            平时爱翻产品设计类的文章，琢磨一个按钮为什么放在那个位置、文案为什么这么写。
+          </p>
+          <!-- ★ 结尾签名，可改成自己的语气 -->
+          <p data-page-node-id="DkSKTsEGM9r8JVhOSBRlw7" class="about-sign">—— 一个爱折腾的商科生</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       作品（目前只有虎扑小游戏这一个，后续有新作品可整段复制卡片）
+       ★ 修改处：游戏标题、介绍文案、「怎么玩」「设计思路」与链接
+       封面替换：把 <a class="game-cover">…</a> 整段换成
+       <img class="game-cover" src="游戏截图.png" alt="游戏画面"
+            style="object-fit:cover">
+       ============================================================ -->
+  <section data-page-node-id="Rc5xdUOMBCpRBcGoPdJjif" class="sec" id="works">
+    <div data-page-node-id="AsKYqs3ASBwB9kDtOPuKUb" class="wrap">
+
+      <div data-page-node-id="l4YfUVznkp66IwfEIol3F7" class="sec-head">
+        <div data-page-node-id="PDD9l3aRxTX1YsbS1MUqHN">
+          <span data-page-node-id="iFYwcUr4hnropAGsH743JP" class="eyebrow">02 / 作品</span>
+          <h2 data-page-node-id="o3Hk0gcL1FZ3M5oZIuIE9V" class="sec-title">做过的东西</h2>
+        </div>
+        <p data-page-node-id="mdtldlNZqkLkZaF5PW1TDu" class="sec-note">个人项目 / 持续更新</p>
+      </div>
+
+      <div data-page-node-id="b2wDgMGJiXeKo7Pzs6eK16" class="sec-body works-list">
+
+        <!-- 作品列表：卡片会自动排成三列。
+             第一个「虎扑小游戏」是横跨整行的重点卡片；
+             以后新增作品，复制列表末尾的模板块即可。 -->
+
+        <!-- ---------- 作品：虎扑小游戏 ----------
+             ★ 修改处：游戏标题、介绍文案、「怎么玩」「设计思路」
+             ★★★ 游戏链接共 2 处（① 开始按钮 ② 封面），搜索「游戏链接」
+                 即可定位，两处填同一个地址 ★★★ -->
+        <div data-page-node-id="nQYRHUIboWhFnFgp0t1zLZ" class="game-card" id="game">
+
+          <div data-page-node-id="GHcTCGAOngzzh6YzZcmoJZ" class="game-copy">
+            <span data-page-node-id="FYHrnHSi72ErTQqVjXgupA" class="game-badge"><i data-page-node-id="cE9aqSPXcKXzCJjMK0Fbh2" aria-hidden="true"></i>浏览器小游戏 · 3 分钟一局</span>
+
+            <!-- ★ 游戏标题 -->
+            <h3 data-page-node-id="qCLMzP3Nv1l3hoHojo2b0f" class="game-title">我的虎扑小游戏</h3>
+
+            <!-- ★ 游戏总介绍 -->
+            <p data-page-node-id="wtpCgedHZZjNzbkFBl8bEs" class="game-lede">课间三分钟，来一局卡牌竞价对决。这是一个在浏览器里就能玩的篮球小游戏： </p>
+
+            <div data-page-node-id="k43Ya032yBVE2EKY1CzV19" class="game-notes">
+              <div data-page-node-id="vbNfNn3KIH77ReGd8uc3kv">
+                <h4 data-page-node-id="aUGGmcTibxateAEKUKcN6m">怎么玩</h4>
+                <p data-page-node-id="MOwPVEtM2BC5Go4mmRLNku">
+                  每局随机抽到一张球员卡，对比命中率、篮板、助攻三项数据，
+                  数值大者赢下这一回合，连赢三局即可解锁「今日最佳阵容」。
+                </p>
+              </div>
+              <div data-page-node-id="P4AgbVe7WM5tFCSeGe354l">
+                <h4 data-page-node-id="ituK4of7AqeA0thWuHqm4T">设计思路</h4>
+                <p data-page-node-id="cylsXjkwj4gyh1yMvzBDp5">
+                  想让没时间看完整场比赛的人，也能在课间三分钟里感受到一点球场氛围，
+                  所以规则尽量简单、反馈尽量快，输赢都能马上再来一把。
+                </p>
+              </div>
+            </div>
+
+            <div data-page-node-id="Pa9McQeDrZL6LdaJswxPG2" class="game-actions">
+              <!-- 游戏链接 ①：开始按钮（把 href="#" 换成你的小游戏地址） -->
+              <a data-page-node-id="avjhK84PJFF51MCE8CQoN7" class="btn btn-primary" href="#" target="_blank" rel="noopener">
+                立即开始游戏
+                <svg data-page-node-id="AcBMdNTgpRFVdzr5y6itEw" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-page-node-id="3VEjVsIFl5YOwStW1Mq5TN" d="M4 12h15M13 6l6 6-6 6"></path></svg>
+              </a>
+              <span data-page-node-id="BYGCOFqSrEntB4wDeV2kzD" class="game-hint">手机 / 电脑均可直接打开</span>
+            </div>
+          </div>
+
+          <!-- 游戏封面占位。换成真实截图：
+               <img class="game-cover" src="游戏截图.png" alt="游戏画面"
+                    style="object-fit:cover"> -->
+          <!-- 游戏链接 ②：封面（与上面的按钮填同一个地址） -->
+          <a data-page-node-id="UAiR2uCHzB0xfr81NV6Kvy" class="game-cover" href="#" target="_blank" rel="noopener" aria-label="立即开始游戏">
+            <span data-page-node-id="rUvX7GGW2Cdm3JZqyKVie8" class="game-chrome" aria-hidden="true"><i data-page-node-id="5y4aUPk7GXB6tlBMw9rLe5"></i><i data-page-node-id="mGlMqCyx79uPiIuyboyDKn"></i><i data-page-node-id="MEIdPgI5SdAbrh7kB9H7nr"></i></span>
+            <span data-page-node-id="F6YggiY1MKRVBLAdO4LYDS" class="play" aria-hidden="true">
+              <svg data-page-node-id="6IjL5JLK7zdPjiw1lladmt" viewBox="0 0 24 24"><path data-page-node-id="8iZkAGy2tWLc7nOqmJKZG4" d="M8 5.5v13l11-6.5z"></path></svg>
+            </span>
+            <span data-page-node-id="lREnr2zXEaGFDoFsisgn2Y" class="game-cover-note">游戏画面占位 · 替换为截图</span>
+          </a>
+
+        </div>
+
+        <!-- 新增作品：把下面这条注释里的 <article> 整段复制到列表末尾，
+             删掉首尾的注释符号，再改标题、简介和链接即可；卡片会自动排成三列。 -->
+
+        <!--
+        <article class="work-item">
+          <a class="work-item-cover" href="#">封面占位</a>
+          <div class="work-item-body">
+            <h3>作品名称</h3>
+            <p>一句话说明这个作品做了什么、你负责哪一部分。</p>
+            <a class="work-item-link" href="#">查看详情 →</a>
+          </div>
+        </article>
+        -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       生活兴趣
+       ★ 修改处：三张小卡片的图标（内联 SVG）、标题、一句话描述
+       ============================================================ -->
+  <section data-page-node-id="VroVMOQID6DGvH021WSnio" class="sec" id="life">
+    <div data-page-node-id="5mHDT0m5V2UOz59tOqDeDv" class="wrap">
+
+      <div data-page-node-id="EDLtldt0vRpiAtxr87xLnZ" class="sec-head">
+        <div data-page-node-id="i8rWt396cIuwaH9DeK6rTO">
+          <span data-page-node-id="S1XnDafZ07l2igAqCLV02Y" class="eyebrow">03 / 兴趣</span>
+          <h2 data-page-node-id="OW70vtclaQzOdaP6OAD4nM" class="sec-title">空闲时候</h2>
+        </div>
+        <p data-page-node-id="emj3qfgjb9XoFtTxgxVO2R" class="sec-note">音乐 / 看球 / 散步</p>
+      </div>
+
+      <div data-page-node-id="dQiKgArfgeLlInLNsbdlmF" class="sec-body life">
+
+        <div data-page-node-id="siBAY8EACAXLl8GCT05APP" class="life-card">
+          <span data-page-node-id="bUz5CrDHXvh5uCGP9egkzW" class="life-icon" aria-hidden="true">
+            <svg data-page-node-id="OX84DFa96piai7GoiCb2mx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path data-page-node-id="cPv1dN1SIpFynYTonxcEH5" d="M9.4 17.2V5.8l9.2-1.7v11.4"></path>
+              <circle data-page-node-id="GrG7FxDrmWTQJsmQSLHS5c" cx="6.8" cy="17.4" r="2.6"></circle>
+              <circle data-page-node-id="4BduIatiNGXUAYlUduzlrD" cx="16" cy="15.5" r="2.6"></circle>
+            </svg>
+          </span>
+          <div data-page-node-id="PAw3WmT7U7n6zvP7YCZ9OW">
+            <h3 data-page-node-id="MetNDOopVxmPEhK521yQ68">音乐</h3>
+            <p data-page-node-id="Y3Zg0dVZV9r3Z5MUT2lnze">通勤和写作业时都在放歌，最近偏爱 rnb 和弦乐。</p>
+          </div>
+        </div>
+
+        <div data-page-node-id="ssEFtnJeQ08i2WWBJKR2R3" class="life-card">
+          <span data-page-node-id="FsYqhmoPA373fi9DWsHJBx" class="life-icon" aria-hidden="true">
+            <svg data-page-node-id="7rfAsWQRJOxyD0JXwcYBSu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <circle data-page-node-id="UjslcRzLJlHCZVX9bxYGWf" cx="12" cy="12" r="8.6"></circle>
+              <path data-page-node-id="zHPpPZ32slKiXdkYvyYYc5" d="M12 3.4v17.2M3.4 12h17.2"></path>
+              <path data-page-node-id="fM7ZAwOGF5pbpJvNemKkFf" d="M6.2 6.2c3.6 2.4 3.6 9.2 0 11.6M17.8 6.2c-3.6 2.4-3.6 9.2 0 11.6"></path>
+            </svg>
+          </span>
+          <div data-page-node-id="J6qU0aRlNK2OryDonHxCsQ">
+            <h3 data-page-node-id="Ow0A1ehIBt2BV7DaPZB5Ts">看球</h3>
+            <p data-page-node-id="ThaxqtYmN8YQxL6KROZHEn">周末看球，喜欢琢磨战术和球员数据，偶尔记两笔。</p>
+          </div>
+        </div>
+
+        <div data-page-node-id="NjO4r9gDrY8ChSHeEckjJo" class="life-card">
+          <span data-page-node-id="QiZBSGTEnTdyBMD2V7NnZN" class="life-icon" aria-hidden="true">
+            <svg data-page-node-id="6X2wpsAXOcVcTLsZGHHOcz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle data-page-node-id="Y8r17BB8fvMWWJai0QExGr" cx="12.3" cy="4.4" r="1.9"></circle>
+              <path data-page-node-id="OM8pkJ2EbIi5KgoFfAOzUu" d="M12.4 6.4v6.4"></path>
+              <path data-page-node-id="DU9dBViMlyGHRZChNadnp4" d="M12.4 12.8l1.7 3.3.3 3.6"></path>
+              <path data-page-node-id="iPfQZzNPQc2zFxKz4qmmQi" d="M12.4 12.8l-2 2.9-1.2 3.4"></path>
+              <path data-page-node-id="lb4BYbhO8FyWc4NEAt0QjT" d="M12.4 8.7l-2.2 1.7-.9 2.2"></path>
+            </svg>
+          </span>
+          <div data-page-node-id="UV0g3MtC1rubtVfG60keT8">
+            <h3 data-page-node-id="gNuEeIZ2w8AIdkJx1cTDsj">散步</h3>
+            <p data-page-node-id="cCSodtUGFDH4BmahowVLIy">喜欢在老城区乱走，拍路牌、天空和不经意的角落。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       联系
+       ★ 修改处：左侧一段话，以及邮箱（mailto 地址与显示文字都要改）
+       ============================================================ -->
+  <section data-page-node-id="dsP2apz8dyQQC2JGLFFScM" class="sec" id="contact">
+    <div data-page-node-id="672xwVPce8ZzfqvO6el7fm" class="wrap">
+
+      <div data-page-node-id="fkSVTZIxRvkMXTDmk3SocH" class="sec-head">
+        <div data-page-node-id="mrZDoxG1R1VlJXpuZhMGFf">
+          <span data-page-node-id="aswi9oFX3IJvUriakX76CS" class="eyebrow">04 / 联系</span>
+          <h2 data-page-node-id="vmNEqexwcp9NBvC7j5VjDC" class="sec-title">想聊聊，随时找我</h2>
+        </div>
+        <p data-page-node-id="KBW7VDjFhbRH8WhxdbpIak" class="sec-note">作业 / 合作 </p>
+      </div>
+
+      <div data-page-node-id="WK6Er1cTFXQjft00CVUin9" class="sec-body contact">
+
+        <div data-page-node-id="dxmBOXI43RowOmiIxIHUvV" class="contact-copy">
+          <p data-page-node-id="wLAJbzJRyDKALezSsziJg3">
+            作业上的问题、想一起做个小项目，或者只是想聊聊球，都可以直接找我。
+            邮件基本每天都会看，看到就会回。
+          </p>
+          <p data-page-node-id="NrwMpyWO7mG8AQKXmMX9Dj" class="hint">通常 24 小时内回复 · 成都</p>
+        </div>
+
+        <ul data-page-node-id="BAnzaeXRvj95xErurpDpcX" class="contact-list">
+
+          <!-- ★ 邮箱：mailto 里的地址和显示文字都要改 -->
+          <li data-page-node-id="roCc52yNS1kPzROxwQFaD3">
+            <a data-page-node-id="jP25c0D9qhZV9WpeDEubsU" class="row" href="mailto:xxx@example.com">
+              <span data-page-node-id="BmuCCrmzxbo3DlZ0MAd2R8" class="label">邮箱</span>
+              <span data-page-node-id="CftmPvXSuF9cs8UA1HYMAo" class="value">davidz357@163.com</span>
+              <svg data-page-node-id="GghLEbFaL9RyyNkSIMeiH6" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-page-node-id="uy7l6BsAiPQxFDKRCwHCn3" d="M7 17 17 7M9 7h8v8"></path></svg>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     页脚
+     ★ 修改处：版权年份、姓名、学校，以及右侧收尾短句
+     ============================================================ -->
+<footer data-page-node-id="e4ZeR0IFJ55lwonyotc8iG" class="footer">
+  <div data-page-node-id="YR1aK04WraaiaYKpCGHSxE" class="wrap footer-inner">
+    <p data-page-node-id="5trPJBizR5Z7MAyBYXGrvZ">© 2026 XXX · 成都大学工商管理 · 课程作业作品</p>
+    <p data-page-node-id="Tb1z9hHdZQL5eAKPiheXbb" class="quote">把喜欢的东西，做成能点开的东西。</p>
+    <p data-page-node-id="8MytHOd0tHmT9ffLz5Dim9"><a data-page-node-id="TEu5VjKPaqPiwRogCHEa32" href="#top">回到顶部 ↑</a></p>
+  </div>
+</footer>
+
+
+
+
+</body></html>
